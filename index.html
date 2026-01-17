@@ -14,64 +14,57 @@
             height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; 
         }
 
-        /* MUSIC START OVERLAY */
+        /* START OVERLAY */
         #musicOverlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: var(--pink); z-index: 1000; display: flex; 
-            flex-direction: column; justify-content: center; align-items: center;
-            color: white; cursor: pointer; transition: 0.8s ease;
+            background: linear-gradient(45deg, var(--pink), var(--dark-pink)); z-index: 1000; 
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: white; cursor: pointer; transition: 1s ease;
         }
         
         .container { 
-            width: 94%; max-width: 380px; height: 92vh; background: rgba(255, 255, 255, 0.95); 
+            width: 94%; max-width: 380px; height: 92vh; background: rgba(255, 255, 255, 0.98); 
             border-radius: 45px; border: 6px solid #fff; position: relative; 
             display: flex; flex-direction: column; padding: 25px; text-align: center; 
-            box-shadow: 0 25px 50px rgba(255,133,161,0.3);
+            box-shadow: 0 25px 50px rgba(255,133,161,0.4);
         }
 
-        .screen { display: none; flex-direction: column; height: 100%; animation: fadeIn 0.6s ease-out; }
+        .screen { display: none; flex-direction: column; height: 100%; animation: fadeIn 0.8s ease-out; }
         .active { display: flex; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .floating-emoji { position: absolute; font-size: 50px; z-index: 100; animation: float 3.5s ease-in-out infinite; pointer-events: none; }
-        .k1 { top: -15px; right: 5px; }
-        .k2 { bottom: 85px; left: -10px; animation-delay: 1s; }
-        @keyframes float { 0%, 100% { transform: translateY(0) rotate(8deg); } 50% { transform: translateY(-20px) rotate(-8deg); } }
+        .title { font-family: 'Dancing Script', cursive; color: var(--dark-pink); font-size: 2.2rem; margin: 10px 0; }
 
-        .title { font-family: 'Dancing Script', cursive; color: var(--dark-pink); font-size: 2.1rem; margin: 5px 0; line-height: 1.2; }
+        /* REPLACED PHOTOS WITH GLOWING HEART */
+        .heart-placeholder {
+            width: 100%; height: 210px; display: flex; justify-content: center; align-items: center;
+            background: #fff; border-radius: 30px; border: 5px solid var(--pink);
+            position: relative; overflow: hidden;
+        }
+        .main-heart { font-size: 80px; animation: pulse 1.2s infinite; }
 
-        #slideshow { width: 100%; height: 210px; border-radius: 30px; overflow: hidden; border: 5px solid #fff; box-shadow: 0 10px 25px rgba(255,133,161,0.3); position: relative; }
-        #slideshow img { width: 100%; height: 100%; object-fit: cover; position: absolute; opacity: 0; transition: 1.5s ease-in-out; }
-        #slideshow img.active { opacity: 1; }
-
-        /* LONG SCROLLABLE LETTER */
+        /* THE LETTER BOX */
         .envelope-space { position: relative; height: 320px; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 20px; }
-        .envelope-wrapper { position: relative; width: 230px; height: 140px; background: #ff85a1; border-radius: 0 0 20px 20px; cursor: pointer; z-index: 10; }
+        .envelope-wrapper { position: relative; width: 230px; height: 140px; background: var(--pink); border-radius: 0 0 20px 20px; cursor: pointer; z-index: 10; }
         .envelope-wrapper::before { 
             content: ""; position: absolute; top: -80px; left: 0; 
             border-left: 115px solid transparent; border-right: 115px solid transparent; 
-            border-bottom: 80px solid #ff85a1; transition: 0.7s; transform-origin: bottom; z-index: 30; 
+            border-bottom: 80px solid var(--pink); transition: 0.7s; transform-origin: bottom; z-index: 30; 
         }
         .letter { 
             position: absolute; bottom: 10px; left: 10px; width: 210px; height: 110px; 
             background: #fff; border-radius: 12px; padding: 25px; transition: 0.9s cubic-bezier(0.19, 1, 0.22, 1); 
             z-index: 5; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow-y: auto; 
-            text-align: left; font-size: 14.5px; line-height: 1.6; color: #333; border-top: 8px solid var(--pink);
+            text-align: left; font-size: 15px; line-height: 1.8; color: #444; border-top: 8px solid var(--pink);
         }
-        .open .letter { transform: translateY(-260px); height: 440px; width: 310px; left: -40px; z-index: 40; }
+        .open .letter { transform: translateY(-310px); height: 520px; width: 340px; left: -55px; z-index: 40; }
         .open::before { transform: rotateX(180deg); z-index: 0; }
 
         #cakeCanvas { background: transparent; cursor: crosshair; touch-action: none; margin: 10px auto; }
+        .btn { background: linear-gradient(to right, var(--dark-pink), #ff758c); color: white; border: none; padding: 18px; border-radius: 60px; font-weight: 600; cursor: pointer; margin-top: auto; font-size: 1.1rem; }
 
-        .letter-grid { display: grid; gap: 12px; }
-        .flip-card { height: 85px; cursor: pointer; }
-        .flip-card-inner { position: relative; width: 100%; height: 100%; transition: 0.8s; transform-style: preserve-3d; }
-        .flipped .flip-card-inner { transform: rotateY(180deg); }
-        .front, .back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 22px; border: 3px solid var(--pink); display: flex; align-items: center; justify-content: center; }
-        .front { background: url('https://i.pinimg.com/736x/8d/64/0e/8d640e0600a0d489b4f74d0085d3857e.jpg') center/cover; }
-        .back { background: var(--pink); color: white; transform: rotateY(180deg); padding: 12px; font-size: 0.9rem; font-weight: 600; }
-
-        .btn { background: linear-gradient(to right, var(--dark-pink), #ff758c); color: white; border: none; padding: 18px; border-radius: 60px; font-weight: 600; cursor: pointer; margin-top: auto; }
+        .falling-heart { position: absolute; color: var(--dark-pink); font-size: 20px; pointer-events: none; animation: fall linear forwards; }
+        @keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
     </style>
 </head>
 <body>
@@ -79,87 +72,79 @@
 <audio id="bgMusic" loop preload="auto"><source src="jhol.mp3" type="audio/mpeg"></audio>
 
 <div id="musicOverlay" onclick="enableMusic()">
-    <div style="font-size: 5rem; animation: pulse 1s infinite;">🎁</div>
-    <h2 style="font-family: 'Dancing Script';">Click to Open Mahira's Surprise</h2>
+    <div style="font-size: 6rem; animation: pulse 1s infinite;">✨🎁✨</div>
+    <h2 style="font-family: 'Dancing Script'; font-size: 2rem; padding: 0 20px;">Tap for your Surprise, Mahira</h2>
 </div>
 
 <div class="container">
     <div class="screen active" id="s1">
-        <div class="floating-emoji k1">🎂</div>
-        <h1 class="title">Happy Birthday My Dear Mahira 💖</h1>
-        <div id="slideshow">
-            <img src="pic1.jpg" class="active">
-            <img src="pic2.jpg">
-            <img src="pic3.jpg">
+        <h1 class="title">Happy Birthday My Pretty Mahira 💖</h1>
+        <div class="heart-placeholder">
+            <div class="main-heart">💝</div>
         </div>
-        <p style="font-family:'Parisienne'; font-size: 1.6rem; color: var(--dark-pink); margin-top: 15px;">To my everything ✨</p>
-        <button class="btn" onclick="next('s2')">Open My Heart 💌</button>
+        <p style="font-family:'Parisienne'; font-size: 1.7rem; color: var(--dark-pink); margin-top: 20px;">Every day is brighter with you...</p>
+        <button class="btn" onclick="next('s2')">Read My Feelings 💌</button>
     </div>
 
     <div class="screen" id="s2">
-        <div class="floating-emoji k1">🎂</div>
-        <h1 class="title">For You 💕</h1>
+        <h1 class="title">My Heart to Yours 💕</h1>
         <div class="envelope-space">
             <div class="envelope-wrapper" onclick="this.classList.toggle('open')">
                 <div class="letter">
-                    <p style="font-family:'Dancing Script'; font-size:1.6rem; color:var(--dark-pink); margin:0;">My Dearest Mahira,</p><br>
-                    I honestly can't express my love through words, but I have to tell you this...<br><br>
-                    Whenever I'm stressed or in pain, <b>getting a text from you makes everything vanish</b>. You are my peace. Every pain I feel simply disappears the moment I see your name on my screen.<br><br>
-                    Your <b>smile</b> is my favorite view in the entire world. And Mahira... <b>whenever we make eye contact, it feels like butterflies in my stomach.</b> It's a feeling I never want to lose.<br><br>
-                    More than anything, <b>I want my future with you</b>. Please, don't ever make me a stranger and don't run away from me. I can't imagine a life where you aren't by my side. I want to grow with you, laugh with you, and be there for you forever.<br><br>
-                    <b>I love you sooo much!</b> 😚🫶🏻💗
+                    <p style="font-family:'Dancing Script'; font-size:1.8rem; color:var(--dark-pink); margin:0;">Mahira My Love,</p><br>
+                    I have to confess something today... <b>I am totally addicted to your smile.</b>🫠 Whenever you laugh, everything else just fades away. And your eyes? I’m obsessed with them. <br><br>
+                    Even <b>during class, my eyes automatically search for you.</b> I don't know why, but I just need to see you to feel okay. 😫<br><br>
+                    Whenever we make eye contact, <b>the butterflies in my stomach are so strong</b> that I can't even think straight. <br><br>
+                    Getting a text from you is the highlight of my day. It makes every bit of stress or pain vanish instantly. You are my peace and my everything.<br><br>
+                    Please, <b>never make me a stranger and don't ever run away from me.</b> I want my whole future to be with you. I want to grow with you, protect you, and love you more every single day.<br><br>
+                    <b>Happy Birthday to the most beautiful girl!</b> 😚🫶🏻💗
                 </div>
             </div>
         </div>
-        <p style="font-size: 0.75rem; color: #777;">(Tap the envelope & scroll to read all)</p>
         <button class="btn" onclick="next('s3')">Cut Your Cake 🎂</button>
     </div>
 
     <div class="screen" id="s3">
-        <h1 class="title">Make a Wish</h1>
+        <h1 class="title">Make a Wish, Mahira</h1>
         <canvas id="cakeCanvas" width="300" height="260"></canvas>
         <p id="cakeHint">Swipe to cut the cake! 🔪</p>
-        <button class="btn" id="cakeBtn" style="display:none;" onclick="next('s4')">See Secrets ✨</button>
+        <button class="btn" id="cakeBtn" style="display:none;" onclick="next('s4')">See My Secrets ✨</button>
     </div>
 
     <div class="screen" id="s4">
-        <h1 class="title">For My Pretty Girl 🕸️</h1>
-        <div class="letter-grid">
-            <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="front"></div><div class="back">Your smile is so beautiful! 😍</div></div></div>
-            <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="front"></div><div class="back">Your eyes are very pretty! 👀💖</div></div></div>
-            <div class="flip-card" onclick="this.classList.toggle('flipped')"><div class="flip-card-inner"><div class="front"></div><div class="back">Forever is only with you. 🏠</div></div></div>
+        <h1 class="title">Why I Love You 🕸️</h1>
+        <div style="display: grid; gap: 15px;">
+            <div style="background:var(--pink); color:white; padding:18px; border-radius:25px; font-weight:600;">I'm addicted to your smile! 🫠</div>
+            <div style="background:var(--pink); color:white; padding:18px; border-radius:25px; font-weight:600;">Your eyes are my favorite view! 👀</div>
+            <div style="background:var(--pink); color:white; padding:18px; border-radius:25px; font-weight:600;">I want my forever only with you! 🏠</div>
         </div>
-        <button class="btn" onclick="next('s5')">Seal Our Love 💝</button>
+        <button class="btn" onclick="next('s5')">A Final Surprise 💝</button>
     </div>
 
     <div class="screen" id="s5">
-        <div class="floating-emoji k2">🎂</div>
-        <h1 class="title">Always Yours</h1>
-        <div style="background:#fff; padding:50px 30px; border-radius:40px; border: 5px dashed var(--dark-pink); position:relative; box-shadow: 0 15px 30px rgba(0,0,0,0.05);">
-            <div style="font-size:5rem; animation: pulse 1.2s infinite; margin-bottom: 20px;">💝</div>
-            <p style="font-weight:600; font-size: 1.3rem;">Happy Birthday Mahira!</p>
-            <p style="font-family:'Parisienne'; font-size:2.4rem; color: var(--dark-pink);">Love You Always</p>
+        <h1 class="title">Forever Yours</h1>
+        <div style="background:#fff; padding:60px 30px; border-radius:40px; border: 5px dashed var(--dark-pink); position:relative;">
+            <div style="font-size:6rem; animation: pulse 1.2s infinite; margin-bottom: 20px;">💝</div>
+            <p style="font-weight:600; font-size: 1.5rem;">Happy Birthday Mahira!</p>
+            <p style="font-family:'Parisienne'; font-size:2.8rem; color: var(--dark-pink); margin-top:10px;">Love You Always</p>
         </div>
-        <button class="btn" onclick="location.reload()">Replay Love ✨</button>
+        <button class="btn" onclick="location.reload()">Replay the Love ✨</button>
     </div>
 </div>
 
 <script>
     function enableMusic() {
         var music = document.getElementById('bgMusic');
-        music.play().catch(e => console.log("Play failed", e));
+        music.play();
         document.getElementById('musicOverlay').style.opacity = '0';
-        setTimeout(() => { document.getElementById('musicOverlay').style.display = 'none'; }, 800);
+        setTimeout(() => { document.getElementById('musicOverlay').style.display = 'none'; }, 1000);
     }
-
-    const slides = document.querySelectorAll('#slideshow img');
-    let cur = 0;
-    setInterval(() => { slides[cur].classList.remove('active'); cur = (cur+1)%slides.length; slides[cur].classList.add('active'); }, 3000);
 
     function next(id) { 
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); 
         document.getElementById(id).classList.add('active'); 
-        if(id==='s3') drawCake(false); 
+        if(id==='s3') drawCake(false);
+        if(id==='s5') startHearts();
     }
 
     function drawCake(isCut) {
@@ -172,13 +157,25 @@
         ctx.fillStyle = "#ffb3c6";
         ctx.beginPath(); ctx.ellipse(150, 140, 85, 42, 0, 0, Math.PI * 2); ctx.fill();
         ctx.fillStyle = "#ff4d6d"; ctx.fillRect(146, 75, 8, 45);
-        ctx.fillStyle = "#ffd93d"; ctx.beginPath(); ctx.arc(150, 65, 11, 0, 7); ctx.fill();
+        ctx.fillStyle = "#ffd93d"; ctx.beginPath(); ctx.arc(150, 65, 12, 0, 7); ctx.fill();
         if(isCut) { 
             ctx.strokeStyle="#fff"; ctx.lineWidth=12; ctx.lineCap="round";
             ctx.beginPath(); ctx.moveTo(150,120); ctx.lineTo(150,225); ctx.stroke(); 
         }
-        const handleCut = () => { if(!isCut){ drawCake(true); document.getElementById('cakeHint').innerHTML="<b>🎂 Birthday Wish Made! 🎂</b>"; document.getElementById('cakeBtn').style.display="block"; }};
+        const handleCut = () => { if(!isCut){ drawCake(true); document.getElementById('cakeHint').innerHTML="<b>🎂 Happy Birthday Mahira! 🎂</b>"; document.getElementById('cakeBtn').style.display="block"; }};
         canvas.onmousedown = handleCut; canvas.ontouchstart = handleCut;
+    }
+
+    function startHearts() {
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.classList.add('falling-heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }, 300);
     }
 </script>
 <style> @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } } </style>
